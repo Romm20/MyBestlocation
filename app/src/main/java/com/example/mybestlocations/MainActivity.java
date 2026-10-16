@@ -64,7 +64,11 @@ public class MainActivity extends AppCompatActivity {
         finish();
         else
         {
-            if (grantResults[0]== PackageManager.PERMISSION_DENIED){finish();}
+            if (grantResults[0]== PackageManager.PERMISSION_DENIED || grantResults[3]== PackageManager.PERMISSION_DENIED ) {
+
+
+                finish();
+            }
         }
         }
     }
