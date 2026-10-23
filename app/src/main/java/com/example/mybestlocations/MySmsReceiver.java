@@ -10,11 +10,14 @@ import android.telephony.SmsMessage;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+//mynumber +15555215554
 
 public class MySmsReceiver extends BroadcastReceiver {
 
@@ -60,6 +63,16 @@ public class MySmsReceiver extends BroadcastReceiver {
                         }
                     });
                 }
+                if(messageBody.startsWith(Utilities.REQUEST_SMS)){String t[]=messageBody.split("#");
+                String longitude=t[1];
+                String latitude=t[2];}
+                //notificaation
+                    NotificationCompat.Builder mynotif=new NotificationCompat.Builder(context);
+                    mynotif.setContentTitle("position recu..");
+                    mynotif.setContentText("appuiyer pour voir sur map!");
+                    mynotif.setSmallIcon(android.R.drawable.ic_dialog_map);
+                    mynotif.setAutoCancel(true);
+
                 }
             }
         }
