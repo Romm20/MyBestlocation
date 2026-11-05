@@ -1,5 +1,8 @@
 package com.example.mybestlocations;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,15 +12,17 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-//mynumber +15555215554
+
 
 public class MySmsReceiver extends BroadcastReceiver {
 
@@ -63,19 +68,47 @@ public class MySmsReceiver extends BroadcastReceiver {
                         }
                     });
                 }
-                if(messageBody.startsWith(Utilities.REQUEST_SMS)){String t[]=messageBody.split("#");
-                String longitude=t[1];
-                String latitude=t[2];}
-                //notificaation
-                    NotificationCompat.Builder mynotif=new NotificationCompat.Builder(context);
+                if(messageBody.startsWith(Utilities.RESPONSE_SMS)) {
+                    String t[] = messageBody.split("#");
+                    String longitude = t[1];
+                    String latitude = t[2];
+
+
+                    //notificaation
+                    NotificationCompat.Builder mynotif = new NotificationCompat.Builder(context, Utilities.CHANNEL_ID);
                     mynotif.setContentTitle("position recu..");
                     mynotif.setContentText("appuiyer pour voir sur map!");
                     mynotif.setSmallIcon(android.R.drawable.ic_dialog_map);
                     mynotif.setAutoCancel(true);
 
+                    Intent i = new Intent(context, MapsActivity.class);
+                    i.putExtra("longtitude", longitude);
+                    i.putExtra("latitude", latitude);
+                    PendingIntent pi = PendingIntent.getActivity(context, 1, i, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+                    mynotif.setContentIntent(pi);
+
+                    //action
+
+                    //launch
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+
+                    //creation canal
+
+
+                    NotificationChannel canal = new NotificationChannel(Utilities.CHANNEL_ID, "canal pour notre app best locations", NotificationManager.IMPORTANCE_DEFAULT);
+                    notificationManager.createNotificationChannel(canal);
+                    notificationManager.notify(0, mynotif.build());
+
+
+
+
+                }
+
                 }
             }
         }
+        //mynumber +15555215554
 
     }
 }

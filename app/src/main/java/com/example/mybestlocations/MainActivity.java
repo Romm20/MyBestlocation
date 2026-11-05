@@ -2,31 +2,76 @@ package com.example.mybestlocations;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+
 
 import com.example.mybestlocations.databinding.ActivityMainBinding;
+import com.google.android.material.navigation.NavigationBarView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
 
     ActivityMainBinding binding;
+
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding=ActivityMainBinding.inflate(LayoutInflater.from(MainActivity.this));
+        binding = ActivityMainBinding.inflate(LayoutInflater.from(MainActivity.this));
         setContentView(binding.getRoot());
+
+        binding.bottomNavView.setSelectedItemId(R.id.nav_home);
+
+        binding.bottomNavView.setOnItemReselectedListener(new NavigationBarView.OnItemReselectedListener() {
+            @Override
+            public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
+                if(menuItem.getItemId()==R.id.nav_home)
+                {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.host,new HomeFragment()).commit();
+                }
+                if(menuItem.getItemId()==R.id.nav_add){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.host,new AddFragment()).commit();
+                }
+
+            }
+        });
+    }
+}/*
+        binding.btnFetchData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Telechargement t=new Telechargement();
+                t.execute();
+
+
+
+
+
+
+
+            }
+        });
 
         binding.btnSendSms.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,5 +132,74 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+    class Telechargement extends AsyncTask {
+        ArrayList<Position> data=new ArrayList<>();
+        AlertDialog alert;
+        JSONObject result;
 
-}
+        @Override
+        protected void onPreExecute() {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+            dialog.setTitle("telechargement");
+            dialog.setMessage("veuillez patientez");
+
+
+            alert = dialog.create();
+            alert.show();
+        }
+
+
+        @Override
+
+
+        protected Object doInBackground(Object[] objects) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            JSONParser parser = new JSONParser();
+            result = parser.makeRequest(Utilities.URL_GETALLPOSITION);
+            try {
+                int success = result.getInt("success");
+                if (success == 0) {
+                    String msg = result.getString("message");
+                } else
+                {
+                    JSONArray tableau = result.getJSONArray("positions");
+                    for (int i = 0; i < tableau.length(); i++) {
+                        JSONObject ligne=tableau.getJSONObject(i);
+                        int idposition=ligne.getInt("idposition");
+                        String numero=ligne.getString("numero");
+                        String pseudo=ligne.getString("pseudo");
+                        String longitude=ligne.getString("longitude");
+                        String latitude=ligne.getString("latitude");
+
+
+                        Position p = new Position(idposition,numero,pseudo,longitude,latitude);
+                        data.add(p);
+
+
+                    }
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Object o) {
+            Toast.makeText(MainActivity.this, "reponse" + result.toString(), Toast.LENGTH_SHORT).show();
+            alert.dismiss();
+            binding.lv_Position.setAdapter(new ArrayAdapter<>(MainActivity.this,android.R.layout.simple_list_item_1,data));
+
+
+
+        }
+    }
+
+}*/

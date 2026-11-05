@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="#F3F5F9"
+    tools:context=".AddFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Carte blanche contenant le formulaire -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:background="#FFFFFF"
+            android:elevation="6dp">
+
+            <!-- Titre -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ajouter une position"
+                android:textColor="#172554"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Pseudo -->
+            <EditText
+                android:id="@+id/edpseudo"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:hint="Saisir le pseudo"
+                android:inputType="textPersonName"
+                android:singleLine="true"
+                android:padding="14dp"
+                android:textColor="#172554"
+                android:textColorHint="#94A3B8"
+                android:backgroundTint="#2563EB" />
+
+            <!-- Numéro -->
+            <EditText
+                android:id="@+id/edNumero"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="Saisir le numéro"
+                android:inputType="phone"
+                android:singleLine="true"
+                android:padding="14dp"
+                android:textColor="#172554"
+                android:textColorHint="#94A3B8"
+                android:backgroundTint="#2563EB" />
+
+            <!-- Longitude -->
+            <EditText
+                android:id="@+id/edLongitude"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="Saisir la longitude"
+                android:inputType="numberDecimal|numberSigned"
+                android:singleLine="true"
+                android:padding="14dp"
+                android:textColor="#172554"
+                android:textColorHint="#94A3B8"
+                android:backgroundTint="#2563EB" />
+
+            <!-- Latitude -->
+            <EditText
+                android:id="@+id/edLatitude"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="Saisir la latitude"
+                android:inputType="numberDecimal|numberSigned"
+                android:singleLine="true"
+                android:padding="14dp"
+                android:textColor="#172554"
+                android:textColorHint="#94A3B8"
+                android:backgroundTint="#2563EB" />
+
+            <!-- Bouton Save -->
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:text="Save"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2563EB"
+                android:elevation="3dp" />
+
+            <!-- Bouton Map -->
+            <Button
+                android:id="@+id/btnMap"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:text="Map"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#16A34A"
+                android:elevation="3dp" />
+
+            <!-- Bouton Back -->
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:text="Back"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#64748B"
+                android:elevation="3dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
